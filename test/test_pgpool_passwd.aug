@@ -10,6 +10,6 @@ let conf = "myuser:foobar
 otheruser:md503e940f7151fe45672c0eb2b203ac698
 "
 
-test Pgpool.lns get conf =
+test Pgpool_Passwd.lns get conf =
   { "myuser" = "foobar" }
   { "otheruser" = "md503e940f7151fe45672c0eb2b203ac698" }
