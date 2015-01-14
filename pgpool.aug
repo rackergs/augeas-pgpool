@@ -1,11 +1,28 @@
 (*
-Module: Pgconf
-  Parses pgconf.conf
+Module: Pgpool
+  Parses pgpool.conf
 
 Author: Alex Schultz <aschultz@next-development.com>
 
 About: Reference
    http://www.pgpool.net/docs/latest/pgpool-en.html
+
+About: Usage Example
+(start code)
+    augtool> set /augeas/load/Pgpool/lens "Pgpool.lns"
+    augtool> set /augeas/load/Pgpool/incl "/etc/pgpool/pgpool.conf"
+    augtool> load
+
+    augtool> get /files/etc/pgpool/pgpool.conf/port
+    /files/etc/pgpool/pgpool.conf/port = 9999
+
+    augtool> set /files/etc/pgpool/pgpool.conf/port 9990
+    augtool> save
+    Saved 1 file(s)
+
+    $ grep port  /etc/pgpool/pgpool.conf
+    port = 9990
+(end code)
 
 About: Configuration files
    This lens applies to pgconf.conf. See <filter>.
@@ -63,7 +80,8 @@ let entry = entry_gen number
 let lns = (Util.empty | Util.comment | entry)*
 
 (* Variable: filter *)
-let filter = (incl "/etc/pgpool/pgpool.conf"
-                 .incl "/etc/pgpool-II-*/pgpool.conf")
+let filter = incl "/etc/pgpool/pgpool.conf"
+           . incl "/etc/pgpool-II-*/pgpool.conf"
+           . incl "/etc/pgpool2/pgpool.conf"
 
 let xfm = transform lns filter
