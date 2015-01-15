@@ -44,6 +44,10 @@ let sep = del /([ \t]+)|([ \t]*=[ \t]*)/ " = "
      The boolean words from the pgpool configuration (on|off) *)
 let bool_word_re = /on|off/
 
+(* Variable: log_word_re
+     The log words from the pgpool configuration *)
+let log_word_re = /debug[1-5]|info|notice|warning|error|log|fatal|panic/
+
 (* Variable: number_re
      An integer only *)
 let number_re = Rx.integer
@@ -62,7 +66,7 @@ let bool_word = store bool_word_re
 let word_quot =
      let esc_squot = /\\\\'/
   in let no_quot = /[^#'\n]/
-  in let forbidden = number_re | bool_word_re
+  in let forbidden = number_re | bool_word_re | log_word_re
   in let value = (no_quot|esc_squot)* - forbidden
   in Quote.do_squote (store value)
 

@@ -11,6 +11,7 @@ listen_address = '*'
 port = 9999
 
 print_timestamp = on
+log_min_messages = info
 "
 
 test Pgpool.lns get conf =
@@ -19,3 +20,4 @@ test Pgpool.lns get conf =
   { "port" = "9999" }
   { }
   { "print_timestamp" = "on" }
+  { "log_min_messages" = "info" }
