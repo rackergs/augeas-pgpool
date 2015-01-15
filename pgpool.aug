@@ -46,7 +46,14 @@ let bool_word_re = /on|off/
 
 (* Variable: log_word_re
      The log words from the pgpool configuration *)
-let log_word_re = /debug[1-5]|info|notice|warning|error|log|fatal|panic/
+let log_word_re = "info"
+                | "notice"
+                | "warning"
+                | "error"
+                | "log"
+                | "fatal"
+                | "panic"
+                | /debug[1-5]/
 
 (* Variable: number_re
      An integer only *)
@@ -60,8 +67,12 @@ let number = store number_re
      Store the <bool_word_re> without quotes *)
 let bool_word = store bool_word_re
 
+(* View: log_word
+     Store the <log_word_re> without quotes *)
+let log_word = store log_word_re
+
 (* View: word_quot
-     Anything other than <bool_word_re> or <number>
+     Anything other than <bool_word_re> or <number> or <log_word_re>
      Quotes are mandatory *)
 let word_quot =
      let esc_squot = /\\\\'/
@@ -78,6 +89,7 @@ let entry_gen (lns:lens) =
 (* View: entry *)
 let entry = entry_gen number
           | entry_gen bool_word
+          | entry_gen log_word
           | entry_gen word_quot    (* anything else *)
 
 (* View: lns *)
