@@ -54,6 +54,9 @@ let log_word_re = "info"
                 | "fatal"
                 | "panic"
                 | /debug[1-5]/
+                | "terse"
+                | "default"
+                | "verbose"
 
 (* Variable: number_re
      An integer only *)
